@@ -1,0 +1,611 @@
+[
+  {
+    "id": 1,
+    "psgcCode": "128000000",
+    "provDesc": "ILOCOS NORTE",
+    "regCode": "1",
+    "provCode": "128"
+  },
+  {
+    "id": 2,
+    "psgcCode": "129000000",
+    "provDesc": "ILOCOS SUR",
+    "regCode": "1",
+    "provCode": "129"
+  },
+  {
+    "id": 3,
+    "psgcCode": "133000000",
+    "provDesc": "LA UNION",
+    "regCode": "1",
+    "provCode": "133"
+  },
+  {
+    "id": 4,
+    "psgcCode": "155000000",
+    "provDesc": "PANGASINAN",
+    "regCode": "1",
+    "provCode": "155"
+  },
+  {
+    "id": 5,
+    "psgcCode": "209000000",
+    "provDesc": "BATANES",
+    "regCode": "2",
+    "provCode": "209"
+  },
+  {
+    "id": 6,
+    "psgcCode": "215000000",
+    "provDesc": "CAGAYAN",
+    "regCode": "2",
+    "provCode": "215"
+  },
+  {
+    "id": 7,
+    "psgcCode": "231000000",
+    "provDesc": "ISABELA",
+    "regCode": "2",
+    "provCode": "231"
+  },
+  {
+    "id": 8,
+    "psgcCode": "250000000",
+    "provDesc": "NUEVA VIZCAYA",
+    "regCode": "2",
+    "provCode": "250"
+  },
+  {
+    "id": 9,
+    "psgcCode": "257000000",
+    "provDesc": "QUIRINO",
+    "regCode": "2",
+    "provCode": "257"
+  },
+  {
+    "id": 10,
+    "psgcCode": "308000000",
+    "provDesc": "BATAAN",
+    "regCode": "3",
+    "provCode": "308"
+  },
+  {
+    "id": 11,
+    "psgcCode": "314000000",
+    "provDesc": "BULACAN",
+    "regCode": "3",
+    "provCode": "314"
+  },
+  {
+    "id": 12,
+    "psgcCode": "349000000",
+    "provDesc": "NUEVA ECIJA",
+    "regCode": "3",
+    "provCode": "349"
+  },
+  {
+    "id": 13,
+    "psgcCode": "354000000",
+    "provDesc": "PAMPANGA",
+    "regCode": "3",
+    "provCode": "354"
+  },
+  {
+    "id": 14,
+    "psgcCode": "369000000",
+    "provDesc": "TARLAC",
+    "regCode": "3",
+    "provCode": "369"
+  },
+  {
+    "id": 15,
+    "psgcCode": "371000000",
+    "provDesc": "ZAMBALES",
+    "regCode": "3",
+    "provCode": "371"
+  },
+  {
+    "id": 16,
+    "psgcCode": "377000000",
+    "provDesc": "AURORA",
+    "regCode": "3",
+    "provCode": "377"
+  },
+  {
+    "id": 17,
+    "psgcCode": "410000000",
+    "provDesc": "BATANGAS",
+    "regCode": "4",
+    "provCode": "410"
+  },
+  {
+    "id": 18,
+    "psgcCode": "421000000",
+    "provDesc": "CAVITE",
+    "regCode": "4",
+    "provCode": "421"
+  },
+  {
+    "id": 19,
+    "psgcCode": "434000000",
+    "provDesc": "LAGUNA",
+    "regCode": "4",
+    "provCode": "434"
+  },
+  {
+    "id": 20,
+    "psgcCode": "456000000",
+    "provDesc": "QUEZON",
+    "regCode": "4",
+    "provCode": "456"
+  },
+  {
+    "id": 21,
+    "psgcCode": "458000000",
+    "provDesc": "RIZAL",
+    "regCode": "4",
+    "provCode": "458"
+  },
+  {
+    "id": 22,
+    "psgcCode": "1740000000",
+    "provDesc": "MARINDUQUE",
+    "regCode": "17",
+    "provCode": "1740"
+  },
+  {
+    "id": 23,
+    "psgcCode": "1751000000",
+    "provDesc": "OCCIDENTAL MINDORO",
+    "regCode": "17",
+    "provCode": "1751"
+  },
+  {
+    "id": 24,
+    "psgcCode": "1752000000",
+    "provDesc": "ORIENTAL MINDORO",
+    "regCode": "17",
+    "provCode": "1752"
+  },
+  {
+    "id": 25,
+    "psgcCode": "1753000000",
+    "provDesc": "PALAWAN",
+    "regCode": "17",
+    "provCode": "1753"
+  },
+  {
+    "id": 26,
+    "psgcCode": "1759000000",
+    "provDesc": "ROMBLON",
+    "regCode": "17",
+    "provCode": "1759"
+  },
+  {
+    "id": 27,
+    "psgcCode": "505000000",
+    "provDesc": "ALBAY",
+    "regCode": "5",
+    "provCode": "505"
+  },
+  {
+    "id": 28,
+    "psgcCode": "516000000",
+    "provDesc": "CAMARINES NORTE",
+    "regCode": "5",
+    "provCode": "516"
+  },
+  {
+    "id": 29,
+    "psgcCode": "517000000",
+    "provDesc": "CAMARINES SUR",
+    "regCode": "5",
+    "provCode": "517"
+  },
+  {
+    "id": 30,
+    "psgcCode": "520000000",
+    "provDesc": "CATANDUANES",
+    "regCode": "5",
+    "provCode": "520"
+  },
+  {
+    "id": 31,
+    "psgcCode": "541000000",
+    "provDesc": "MASBATE",
+    "regCode": "5",
+    "provCode": "541"
+  },
+  {
+    "id": 32,
+    "psgcCode": "562000000",
+    "provDesc": "SORSOGON",
+    "regCode": "5",
+    "provCode": "562"
+  },
+  {
+    "id": 33,
+    "psgcCode": "604000000",
+    "provDesc": "AKLAN",
+    "regCode": "6",
+    "provCode": "604"
+  },
+  {
+    "id": 34,
+    "psgcCode": "606000000",
+    "provDesc": "ANTIQUE",
+    "regCode": "6",
+    "provCode": "606"
+  },
+  {
+    "id": 35,
+    "psgcCode": "619000000",
+    "provDesc": "CAPIZ",
+    "regCode": "6",
+    "provCode": "619"
+  },
+  {
+    "id": 36,
+    "psgcCode": "630000000",
+    "provDesc": "ILOILO",
+    "regCode": "6",
+    "provCode": "630"
+  },
+  {
+    "id": 37,
+    "psgcCode": "645000000",
+    "provDesc": "NEGROS OCCIDENTAL",
+    "regCode": "6",
+    "provCode": "645"
+  },
+  {
+    "id": 38,
+    "psgcCode": "679000000",
+    "provDesc": "GUIMARAS",
+    "regCode": "6",
+    "provCode": "679"
+  },
+  {
+    "id": 39,
+    "psgcCode": "712000000",
+    "provDesc": "BOHOL",
+    "regCode": "7",
+    "provCode": "712"
+  },
+  {
+    "id": 40,
+    "psgcCode": "722000000",
+    "provDesc": "CEBU",
+    "regCode": "7",
+    "provCode": "722"
+  },
+  {
+    "id": 41,
+    "psgcCode": "746000000",
+    "provDesc": "NEGROS ORIENTAL",
+    "regCode": "7",
+    "provCode": "746"
+  },
+  {
+    "id": 42,
+    "psgcCode": "761000000",
+    "provDesc": "SIQUIJOR",
+    "regCode": "7",
+    "provCode": "761"
+  },
+  {
+    "id": 43,
+    "psgcCode": "826000000",
+    "provDesc": "EASTERN SAMAR",
+    "regCode": "8",
+    "provCode": "826"
+  },
+  {
+    "id": 44,
+    "psgcCode": "837000000",
+    "provDesc": "LEYTE",
+    "regCode": "8",
+    "provCode": "837"
+  },
+  {
+    "id": 45,
+    "psgcCode": "848000000",
+    "provDesc": "NORTHERN SAMAR",
+    "regCode": "8",
+    "provCode": "848"
+  },
+  {
+    "id": 46,
+    "psgcCode": "860000000",
+    "provDesc": "SAMAR (WESTERN SAMAR)",
+    "regCode": "8",
+    "provCode": "860"
+  },
+  {
+    "id": 47,
+    "psgcCode": "864000000",
+    "provDesc": "SOUTHERN LEYTE",
+    "regCode": "8",
+    "provCode": "864"
+  },
+  {
+    "id": 48,
+    "psgcCode": "878000000",
+    "provDesc": "BILIRAN",
+    "regCode": "8",
+    "provCode": "878"
+  },
+  {
+    "id": 49,
+    "psgcCode": "972000000",
+    "provDesc": "ZAMBOANGA DEL NORTE",
+    "regCode": "9",
+    "provCode": "972"
+  },
+  {
+    "id": 50,
+    "psgcCode": "973000000",
+    "provDesc": "ZAMBOANGA DEL SUR",
+    "regCode": "9",
+    "provCode": "973"
+  },
+  {
+    "id": 51,
+    "psgcCode": "983000000",
+    "provDesc": "ZAMBOANGA SIBUGAY",
+    "regCode": "9",
+    "provCode": "983"
+  },
+  {
+    "id": 52,
+    "psgcCode": "997000000",
+    "provDesc": "CITY OF ISABELA",
+    "regCode": "9",
+    "provCode": "997"
+  },
+  {
+    "id": 53,
+    "psgcCode": "1013000000",
+    "provDesc": "BUKIDNON",
+    "regCode": "10",
+    "provCode": "1013"
+  },
+  {
+    "id": 54,
+    "psgcCode": "1018000000",
+    "provDesc": "CAMIGUIN",
+    "regCode": "10",
+    "provCode": "1018"
+  },
+  {
+    "id": 55,
+    "psgcCode": "1035000000",
+    "provDesc": "LANAO DEL NORTE",
+    "regCode": "10",
+    "provCode": "1035"
+  },
+  {
+    "id": 56,
+    "psgcCode": "1042000000",
+    "provDesc": "MISAMIS OCCIDENTAL",
+    "regCode": "10",
+    "provCode": "1042"
+  },
+  {
+    "id": 57,
+    "psgcCode": "1043000000",
+    "provDesc": "MISAMIS ORIENTAL",
+    "regCode": "10",
+    "provCode": "1043"
+  },
+  {
+    "id": 58,
+    "psgcCode": "1123000000",
+    "provDesc": "DAVAO DEL NORTE",
+    "regCode": "11",
+    "provCode": "1123"
+  },
+  {
+    "id": 59,
+    "psgcCode": "1124000000",
+    "provDesc": "DAVAO DEL SUR",
+    "regCode": "11",
+    "provCode": "1124"
+  },
+  {
+    "id": 60,
+    "psgcCode": "1125000000",
+    "provDesc": "DAVAO ORIENTAL",
+    "regCode": "11",
+    "provCode": "1125"
+  },
+  {
+    "id": 61,
+    "psgcCode": "1182000000",
+    "provDesc": "COMPOSTELA VALLEY",
+    "regCode": "11",
+    "provCode": "1182"
+  },
+  {
+    "id": 62,
+    "psgcCode": "1186000000",
+    "provDesc": "DAVAO OCCIDENTAL",
+    "regCode": "11",
+    "provCode": "1186"
+  },
+  {
+    "id": 63,
+    "psgcCode": "1247000000",
+    "provDesc": "COTABATO (NORTH COTABATO)",
+    "regCode": "12",
+    "provCode": "1247"
+  },
+  {
+    "id": 64,
+    "psgcCode": "1263000000",
+    "provDesc": "SOUTH COTABATO",
+    "regCode": "12",
+    "provCode": "1263"
+  },
+  {
+    "id": 65,
+    "psgcCode": "1265000000",
+    "provDesc": "SULTAN KUDARAT",
+    "regCode": "12",
+    "provCode": "1265"
+  },
+  {
+    "id": 66,
+    "psgcCode": "1280000000",
+    "provDesc": "SARANGANI",
+    "regCode": "12",
+    "provCode": "1280"
+  },
+  {
+    "id": 67,
+    "psgcCode": "1298000000",
+    "provDesc": "COTABATO CITY",
+    "regCode": "12",
+    "provCode": "1298"
+  },
+  {
+    "id": 68,
+    "psgcCode": "1339000000",
+    "provDesc": "NCR, FIRST DISTRICT",
+    "regCode": "13",
+    "provCode": "1339"
+  },
+  {
+    "id": 70,
+    "psgcCode": "1374000000",
+    "provDesc": "NCR, SECOND DISTRICT",
+    "regCode": "13",
+    "provCode": "1374"
+  },
+  {
+    "id": 71,
+    "psgcCode": "1375000000",
+    "provDesc": "NCR, THIRD DISTRICT",
+    "regCode": "13",
+    "provCode": "1375"
+  },
+  {
+    "id": 72,
+    "psgcCode": "1376000000",
+    "provDesc": "NCR, FOURTH DISTRICT",
+    "regCode": "13",
+    "provCode": "1376"
+  },
+  {
+    "id": 73,
+    "psgcCode": "1401000000",
+    "provDesc": "ABRA",
+    "regCode": "14",
+    "provCode": "1401"
+  },
+  {
+    "id": 74,
+    "psgcCode": "1411000000",
+    "provDesc": "BENGUET",
+    "regCode": "14",
+    "provCode": "1411"
+  },
+  {
+    "id": 75,
+    "psgcCode": "1427000000",
+    "provDesc": "IFUGAO",
+    "regCode": "14",
+    "provCode": "1427"
+  },
+  {
+    "id": 76,
+    "psgcCode": "1432000000",
+    "provDesc": "KALINGA",
+    "regCode": "14",
+    "provCode": "1432"
+  },
+  {
+    "id": 77,
+    "psgcCode": "1444000000",
+    "provDesc": "MOUNTAIN PROVINCE",
+    "regCode": "14",
+    "provCode": "1444"
+  },
+  {
+    "id": 78,
+    "psgcCode": "1481000000",
+    "provDesc": "APAYAO",
+    "regCode": "14",
+    "provCode": "1481"
+  },
+  {
+    "id": 79,
+    "psgcCode": "1507000000",
+    "provDesc": "BASILAN",
+    "regCode": "15",
+    "provCode": "1507"
+  },
+  {
+    "id": 80,
+    "psgcCode": "1536000000",
+    "provDesc": "LANAO DEL SUR",
+    "regCode": "15",
+    "provCode": "1536"
+  },
+  {
+    "id": 81,
+    "psgcCode": "1538000000",
+    "provDesc": "MAGUINDANAO",
+    "regCode": "15",
+    "provCode": "1538"
+  },
+  {
+    "id": 82,
+    "psgcCode": "1566000000",
+    "provDesc": "SULU",
+    "regCode": "15",
+    "provCode": "1566"
+  },
+  {
+    "id": 83,
+    "psgcCode": "1570000000",
+    "provDesc": "TAWI-TAWI",
+    "regCode": "15",
+    "provCode": "1570"
+  },
+  {
+    "id": 84,
+    "psgcCode": "1602000000",
+    "provDesc": "AGUSAN DEL NORTE",
+    "regCode": "16",
+    "provCode": "1602"
+  },
+  {
+    "id": 85,
+    "psgcCode": "1603000000",
+    "provDesc": "AGUSAN DEL SUR",
+    "regCode": "16",
+    "provCode": "1603"
+  },
+  {
+    "id": 86,
+    "psgcCode": "1667000000",
+    "provDesc": "SURIGAO DEL NORTE",
+    "regCode": "16",
+    "provCode": "1667"
+  },
+  {
+    "id": 87,
+    "psgcCode": "1668000000",
+    "provDesc": "SURIGAO DEL SUR",
+    "regCode": "16",
+    "provCode": "1668"
+  },
+  {
+    "id": 88,
+    "psgcCode": "1685000000",
+    "provDesc": "DINAGAT ISLANDS",
+    "regCode": "16",
+    "provCode": "1685"
+  }
+]

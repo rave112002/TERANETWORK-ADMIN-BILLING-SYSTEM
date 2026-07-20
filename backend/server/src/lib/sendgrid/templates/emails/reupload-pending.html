@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Proof Re-uploaded - Pending Review</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+            padding: 40px 20px;
+            text-align: center;
+            color: #ffffff;
+        }
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        .success-icon {
+            font-size: 60px;
+            margin-bottom: 10px;
+        }
+        .content {
+            padding: 40px 30px;
+        }
+        .status-badge {
+            display: inline-block;
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
+        }
+        .greeting {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .message {
+            font-size: 15px;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        .info-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+        .info-box h3 {
+            color: #28a745;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        .info-label {
+            font-weight: 600;
+            color: #333;
+        }
+        .info-value {
+            color: #666;
+        }
+        .timeline-box {
+            background-color: #fff9e6;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+        .timeline-box h3 {
+            color: #856404;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 10px 0;
+        }
+        .timeline-icon {
+            font-size: 20px;
+            margin-right: 12px;
+            min-width: 24px;
+        }
+        .timeline-content {
+            flex: 1;
+        }
+        .timeline-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 3px;
+        }
+        .timeline-desc {
+            font-size: 14px;
+            color: #666;
+        }
+        .next-steps {
+            background-color: #e7f3ff;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 25px 0;
+        }
+        .next-steps h3 {
+            color: #004085;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        .next-steps ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .next-steps li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #555;
+        }
+        .next-steps li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #28a745;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .highlight-box {
+            background-color: #e8f5e9;
+            border: 2px solid #28a745;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        .highlight-box h3 {
+            color: #1e7e34;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .highlight-box p {
+            color: #155724;
+            font-size: 15px;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+        }
+        .footer p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .contact-info {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #888;
+        }
+        .divider {
+            height: 1px;
+            background-color: #e0e0e0;
+            margin: 30px 0;
+        }
+        @media only screen and (max-width: 600px) {
+            .content {
+                padding: 30px 20px;
+            }
+            .header h1 {
+                font-size: 24px;
+            }
+            .success-icon {
+                font-size: 50px;
+            }
+            .info-row {
+                flex-direction: column;
+            }
+            .info-value {
+                margin-top: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="success-icon">✓</div>
+            <h1>Payment Proof Re-uploaded</h1>
+            <p>Your new submission is under review</p>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="status-badge">✓ Successfully Submitted</div>
+
+            <p class="greeting">Dear {{userName}},</p>
+
+            <p class="message">
+                Thank you for re-uploading your proof of payment for <strong>{{clubName}}</strong>. We have successfully received your new submission and it is now pending review.
+            </p>
+
+            <!-- Success Highlight -->
+            <div class="highlight-box">
+                <h3>Your Payment Proof Has Been Received!</h3>
+                <p>Our team will review your new submission and respond within 1-3 business days.</p>
+            </div>
+
+            <!-- Transaction Details -->
+            <div class="info-box">
+                <h3>📋 Transaction Details</h3>
+                <div class="info-row">
+                    <span class="info-label">Registration ID:</span>
+                    <span class="info-value">{{registrationId}}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Club Name:</span>
+                    <span class="info-value">{{clubName}}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Re-uploaded On:</span>
+                    <span class="info-value">{{reuploadDate}}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Amount:</span>
+                    <span class="info-value">{{amount}}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Current Status:</span>
+                    <span class="info-value" style="color: #28a745; font-weight: 600;">Pending Review</span>
+                </div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="timeline-box">
+                <h3>🕒 What Happens Next</h3>
+                <div class="timeline-item">
+                    <div class="timeline-icon">✓</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Payment Proof Received</div>
+                        <div class="timeline-desc">Your new proof of payment has been uploaded successfully</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon">⏳</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Under Review</div>
+                        <div class="timeline-desc">Our team is verifying your payment details (1-3 business days)</div>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon">📧</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">Email Notification</div>
+                        <div class="timeline-desc">You will receive an update once the review is complete</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Next Steps -->
+            <div class="next-steps">
+                <h3>➤ What You Should Know:</h3>
+                <ul>
+                    <li>Your transaction status has been updated to "Pending Review"</li>
+                    <li>Our verification team will carefully review your new payment proof</li>
+                    <li>You will receive an email notification once the review is complete</li>
+                    <li>If approved, your club registration will be activated immediately</li>
+                    <li>If additional information is needed, we will contact you</li>
+                </ul>
+            </div>
+
+            <div class="divider"></div>
+
+            <p class="message">
+                <strong>Important:</strong> Please keep this email for your records. There is no need to take any further action at this time. We will notify you as soon as the review is complete.
+            </p>
+
+            <p class="message">
+                We appreciate your patience and look forward to welcoming <strong>{{clubName}}</strong> to the Rotary community!
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>Need Help?</strong></p>
+            <p>If you have any questions or concerns about your submission, please don't hesitate to contact us.</p>
+
+            <div class="contact-info">
+                <p>Email: {{supportEmail}}</p>
+                <p>Phone: {{supportPhone}}</p>
+                <p>&copy; {{year}} Rotary Club. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

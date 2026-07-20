@@ -1,0 +1,11 @@
+# Node.js version specification for this project
+# Copy this file to .nvmrc and adjust if needed
+#
+# Usage:
+#   nvm use        # Automatically uses version from .nvmrc
+#   nvm install    # Installs the specified version
+#
+# Supported versions: Node.js 22.x LTS or higher
+# This project uses ES Modules and requires Node.js 22+
+
+22.13.0

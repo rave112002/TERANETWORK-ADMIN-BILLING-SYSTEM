@@ -1,0 +1,208 @@
+%% ISP Admin & Billing Platform — Database Schema (ER Diagram)
+%% Companion to ISP-Platform-Implementation-Plan.md §2 (full DDL is the source of truth).
+%% Grouped by domain in comments below. o{ = many, || = one, o| = zero-or-one.
+
+erDiagram
+
+    %% ─── Auth ───────────────────────────────────────────────
+    USERS ||--o{ REFRESH_TOKENS      : "has"
+    USERS ||--o{ PAYMENTS            : "records (manual)"
+    USERS ||--o{ DUNNING_EXEMPTIONS  : "creates"
+    USERS ||--o{ DISCOVERY_RUNS      : "starts"
+    USERS ||--o{ AUDIT_LOGS          : "actor (soft)"
+
+    %% ─── Customers, plans, subscriptions ────────────────────
+    CUSTOMERS ||--o{ SUBSCRIPTIONS   : "has"
+    CUSTOMERS ||--o{ INVOICES        : "billed to"
+    CUSTOMERS ||--o{ EMAIL_EVENTS    : "receives"
+    PLANS     ||--o{ SUBSCRIPTIONS   : "priced by"
+
+    %% ─── Network / OSS topology ─────────────────────────────
+    OLTS       ||--o{ PON_PORTS      : "has"
+    OLTS       ||--o{ ONUS           : "hosts (denorm)"
+    PON_PORTS  ||--o{ ONUS           : "carries"
+    PON_PORTS  ||--o{ SPLITTERS      : "feeds (parent)"
+    SPLITTERS  ||--o{ SPLITTERS      : "cascades"
+    SPLITTERS  ||--o{ NAPS           : "feeds"
+    NAPS       ||--o{ ONUS           : "terminates"
+    ONUS       ||--o| SUBSCRIPTIONS  : "bound to (1:1)"
+    ONUS       ||--o{ NETWORK_ACTION_LOGS : "logged"
+
+    %% ─── PPPoE edge (MikroTik) ──────────────────────────────
+    ROUTERS       ||--o{ PPPOE_ACCOUNTS : "holds secret"
+    SUBSCRIPTIONS ||--o| PPPOE_ACCOUNTS : "login (1:1)"
+
+    %% ─── Billing ────────────────────────────────────────────
+    SUBSCRIPTIONS ||--o{ INVOICES         : "generates"
+    SUBSCRIPTIONS ||--o{ DUNNING_EXEMPTIONS : "may have"
+    INVOICES      ||--o{ INVOICE_LINES    : "contains"
+    INVOICES      ||--o{ PAYMENTS         : "settled by"
+    INVOICES      ||--o{ EMAIL_EVENTS     : "notifies"
+
+    %% ─── Device discovery / bootstrap ───────────────────────
+    DISCOVERY_RUNS ||--o{ DISCOVERED_ITEMS : "produces"
+
+    %% ══════════════ Entity attribute detail ══════════════════
+
+    USERS {
+        bigint id PK
+        string email UK
+        string password_hash "argon2id"
+        enum   role "super_admin|billing|noc|auditor"
+    }
+    REFRESH_TOKENS {
+        bigint id PK
+        bigint user_id FK
+        char   token_hash UK
+        datetime expires_at
+    }
+    CUSTOMERS {
+        bigint id PK
+        string account_no UK
+        string email "required"
+        enum   status
+    }
+    PLANS {
+        bigint id PK
+        string name
+        decimal monthly_price
+        decimal reconnection_fee
+    }
+    OLTS {
+        bigint id PK
+        enum   vendor "hsgq|huawei|..."
+        enum   pon_technology "epon|gpon"
+        varbinary credentials_enc "encrypted"
+    }
+    ROUTERS {
+        bigint id PK
+        enum   vendor "mikrotik|mock|other"
+        string host
+        varbinary credentials_enc "encrypted"
+    }
+    PON_PORTS {
+        bigint id PK
+        bigint olt_id FK
+        string port_index "e.g. 0/1/3"
+        smallint capacity
+    }
+    SPLITTERS {
+        bigint id PK
+        enum   parent_type "pon_port|splitter"
+        bigint parent_id "polymorphic"
+        enum   ratio "1:2 .. 1:64"
+    }
+    NAPS {
+        bigint id PK
+        bigint splitter_id FK
+        decimal gps_lat
+        decimal gps_lng
+    }
+    ONUS {
+        bigint id PK
+        string serial_no UK
+        string mac UK "EPON identity + join key"
+        bigint nap_id FK
+        bigint pon_port_id FK
+        enum   provisioning_state
+    }
+    SUBSCRIPTIONS {
+        bigint id PK
+        bigint customer_id FK
+        bigint plan_id FK
+        bigint onu_id FK "unique"
+        tinyint statement_day "1-28"
+        enum   status
+    }
+    PPPOE_ACCOUNTS {
+        bigint id PK
+        bigint subscription_id FK "unique"
+        bigint router_id FK
+        string username UK
+        string caller_id_mac "-> onus.mac"
+        tinyint enabled
+    }
+    INVOICE_COUNTERS {
+        smallint year PK
+        int next_no "sequential numbering"
+    }
+    INVOICES {
+        bigint id PK
+        string invoice_no UK
+        bigint subscription_id FK
+        bigint customer_id FK
+        date   due_date
+        decimal total
+        enum   status
+        char   public_token UK "powers /pay/<token>"
+    }
+    INVOICE_LINES {
+        bigint id PK
+        bigint invoice_id FK
+        enum   kind
+        decimal amount "signed"
+    }
+    PAYMENTS {
+        bigint id PK
+        bigint invoice_id FK
+        decimal amount
+        string xendit_payment_id UK
+        bigint recorded_by FK
+    }
+    WEBHOOK_EVENTS {
+        bigint id PK
+        enum   provider "xendit|email"
+        string event_id "de-dupe (unique w/ provider)"
+        json   payload
+    }
+    DUNNING_EXEMPTIONS {
+        bigint id PK
+        bigint subscription_id FK
+        bigint created_by FK
+        datetime expires_at
+    }
+    NETWORK_ACTION_LOGS {
+        bigint id PK
+        bigint onu_id FK
+        enum   action "activate|deactivate|status|dry_run"
+        tinyint success
+    }
+    JOBS {
+        bigint id PK
+        enum   type "deactivate|activate|status|email"
+        enum   status "queued|processing|..|dead|cancelled"
+        int    attempts
+        datetime next_run_at "backoff"
+        string dedupe_key "idempotency + cancel"
+    }
+    DISCOVERY_RUNS {
+        bigint id PK
+        enum   source "olt|mikrotik"
+        bigint started_by FK
+        enum   status
+    }
+    DISCOVERED_ITEMS {
+        bigint id PK
+        bigint run_id FK
+        string external_key "mac|serial|username"
+        enum   match_status "matched|new|orphaned"
+        datetime imported_at
+    }
+    AUDIT_LOGS {
+        bigint id PK
+        bigint actor_id "NULL = system"
+        string entity "polymorphic"
+        json   before_state
+        json   after_state
+    }
+    EMAIL_EVENTS {
+        bigint id PK
+        bigint invoice_id FK
+        bigint customer_id FK
+        enum   type
+        enum   provider_status
+    }
+    SYSTEM_SETTINGS {
+        string key PK "GRACE_DAYS|DRY_RUN|.."
+        string value
+    }

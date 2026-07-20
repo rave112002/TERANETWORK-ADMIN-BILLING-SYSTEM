@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Confirmed</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+            padding: 40px 20px;
+            text-align: center;
+            color: #ffffff;
+        }
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        .success-icon {
+            font-size: 60px;
+            margin-bottom: 10px;
+        }
+        .content {
+            padding: 40px 30px;
+        }
+        .status-badge {
+            display: inline-block;
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
+        }
+        .greeting {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .message {
+            font-size: 15px;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        .info-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #28a745;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+        .info-box h3 {
+            color: #28a745;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .info-row:last-child {
+            border-bottom: none;
+        }
+        .info-label {
+            font-weight: 600;
+            color: #333;
+        }
+        .info-value {
+            color: #666;
+        }
+        .qr-box {
+            background-color: #ffffff;
+            border: 2px solid #28a745;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        .qr-box h3 {
+            color: #1e7e34;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        .qr-box p {
+            color: #666;
+            font-size: 14px;
+            margin-top: 15px;
+        }
+        .qr-code-placeholder {
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border: 1px dashed #28a745;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+        .qr-code-placeholder img {
+            max-width: 100%;
+            height: auto;
+        }
+        .instructions {
+            background-color: #fff9e6;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+        .instructions h3 {
+            color: #856404;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        .instructions ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        .instructions li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #856404;
+        }
+        .instructions li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #ffc107;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .highlight-box {
+            background-color: #e7f3ff;
+            border: 2px solid #007bff;
+            padding: 20px;
+            border-radius: 6px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        .highlight-box h3 {
+            color: #004085;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .highlight-box p {
+            color: #004085;
+            font-size: 15px;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            border-top: 1px solid #e0e0e0;
+        }
+        .footer p {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .contact-info {
+            margin-top: 20px;
+            font-size: 13px;
+            color: #888;
+        }
+        .divider {
+            height: 1px;
+            background-color: #e0e0e0;
+            margin: 30px 0;
+        }
+        @media only screen and (max-width: 600px) {
+            .content {
+                padding: 30px 20px;
+            }
+            .header h1 {
+                font-size: 24px;
+            }
+            .success-icon {
+                font-size: 50px;
+            }
+            .info-row {
+                flex-direction: column;
+            }
+            .info-value {
+                margin-top: 5px;
+            }
+            .qr-code-placeholder img {
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="success-icon">✓</div>
+            <h1>Registration Confirmed!</h1>
+            <p>You're all set for the event</p>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="status-badge">✓ Successfully Registered</div>
+
+            <p class="greeting">Dear {{fullName}},</p>
+
+            <p class="message">
+                Congratulations! Your registration for <strong>{{eventName}}</strong> has been confirmed. We're excited to have you join us!
+            </p>
+
+            <!-- Success Highlight -->
+            <div class="highlight-box">
+                <h3>🎉 You're Registered!</h3>
+                <p>Please keep this email and bring your QR code to the event.</p>
+            </div>
+
+            <!-- Registration Details -->
+            <div class="info-box">
+                <h3>📋 Registration Details</h3>
+                <div class="info-row">
+                    <span class="info-label">Full Name:</span>
+                    <span class="info-value">{{fullName}}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Email:</span>
+                    <span class="info-value">{{email}}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Club:</span>
+                    <span class="info-value">{{clubName}}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Category:</span>
+                    <span class="info-value">{{companyName}}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Rotary member name:</span>
+                    <span class="info-value">{{designation}}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Registration Date:</span>
+                    <span class="info-value">{{registrationDate}}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Attendee ID:</span>
+                    <span class="info-value">{{attendeeId}}</span>
+                </div>
+            </div>
+
+            <!-- QR Code Box -->
+            <div class="qr-box">
+                <h3>📱 Your Event QR Code</h3>
+                <p style="color: #1e7e34; font-weight: 600; margin-bottom: 15px;">
+                    Please present this QR code at the event entrance
+                </p>
+                <div class="qr-code-placeholder">
+                    <img src="cid:qr" alt="Event QR Code" style="max-width: 250px; height: auto; display: block; margin: 0 auto;" />
+                </div>
+                <p>
+                    <strong>Note:</strong> The QR code is also attached to this email as an image file.
+                    You can save it to your phone or print it for easy access.
+                </p>
+            </div>
+
+            <!-- Instructions -->
+            <div class="instructions">
+                <h3>📝 Important Instructions:</h3>
+                <ul>
+                    <li>Save or print your QR code from the attachment</li>
+                    <li>Bring your QR code (digital or printed) to the event</li>
+                    <li>Present it at the registration/entrance area</li>
+                    <li>Arrive at least 15 minutes before the event starts</li>
+                    <li>Keep this email for your records</li>
+                </ul>
+            </div>
+
+            <div class="divider"></div>
+
+            <p class="message">
+                If you have any questions or need to make changes to your registration, please contact our support team. We look forward to seeing you at the event!
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>Need Help?</strong></p>
+            <p>If you have any questions or concerns, please don't hesitate to contact us.</p>
+
+            <div class="contact-info">
+                <p>Email: {{supportEmail}}</p>
+                <p>Phone: {{supportPhone}}</p>
+                <p>&copy; {{year}} Rotary Club. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

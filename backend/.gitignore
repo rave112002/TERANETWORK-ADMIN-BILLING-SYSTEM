@@ -1,0 +1,7 @@
+node_modules
+auth-keys
+public
+logs
+package-lock.json
+.claude*
+.env
