@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node ./server/bin/www.js",
     "dev": "nodemon ./server/bin/www.js",
+    "key:generate": "node ./server/bin/generate-keys.js",
     "pm2:start": "sudo pm2 start ecosystem.config.cjs",
     "pm2:prod": "sudo pm2 start ecosystem.config.cjs --env production",
     "pm2:reload": "sudo pm2 reload ecosystem.config.cjs",
@@ -15,7 +16,7 @@
     "format": "prettier --write \"server/**/*.js\"",
     "format:check": "prettier --check \"server/**/*.js\""
   },
-  "author": "Alfie Garing",
+  "author": "Raven B",
   "license": "ISC",
   "dependencies": {
     "@paralleldrive/cuid2": "^3.0.4",
