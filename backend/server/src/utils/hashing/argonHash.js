@@ -1,39 +1,50 @@
 import argon2 from "argon2";
-import crypto from "node:crypto";
-<<<<<<< HEAD
-import APIError from "../utils/APIError.js";
-=======
 import APIError from "../APIError.js";
->>>>>>> 20dadd5 (reorder files and move to utils folder)
+
+/**
+ * Hash a plaintext password with argon2id.
+ *
+ * argon2 generates a random salt automatically and embeds it inside the returned
+ * hash string (the standard PHC format, e.g. `$argon2id$v=19$m=65536,...`), so
+ * there is no separate salt to store — the single `password_hash` column holds
+ * everything needed to verify later.
+ *
+ * These cost parameters match the ones used by the database seeder so every hash
+ * in the system is produced identically.
+ *
+ * @param {string} password - The plaintext password to hash.
+ * @returns {Promise<string>} The argon2id hash string.
+ * @throws {APIError} If hashing fails.
+ */
 export const hashPassword = async (password) => {
-  const salt = crypto.randomBytes(16).toString("hex");
   try {
-    const hash = await argon2.hash(password, {
-      salt: Buffer.from(salt, "hex"),
-      type: argon2.argon2id, // Use Argon2id
-      memoryCost: 4096, // Corresponds to 4096 * 1024 bytes = 4MB (increase for higher security)
-      timeCost: 3, // Iterations
-      parallelism: 1, // Threads
+    return await argon2.hash(password, {
+      type: argon2.argon2id,
+      memoryCost: 65536, // 64 MB
+      timeCost: 3, // iterations
+      parallelism: 4, // lanes
     });
-    return { hash, salt };
   } catch (_error) {
-    throw new APIError(
-      "An error occurred while generating new hash password",
-      500
-    );
+    throw new APIError("Failed to hash password", 500);
   }
 };
 
-// Function to compare the provided password with the stored hash and salt
-export const comparePassword = async (password, storedHash, storedSalt) => {
+/**
+ * Verify a plaintext password against a stored argon2 hash.
+ *
+ * The salt and cost parameters are read back out of the stored hash string, so we
+ * only need the password and the stored hash — nothing else.
+ *
+ * @param {string} password - The plaintext password to check.
+ * @param {string} storedHash - The argon2 hash previously produced by hashPassword.
+ * @returns {Promise<boolean>} True if the password matches, false otherwise.
+ */
+export const comparePassword = async (password, storedHash) => {
   try {
-    // Verifying the provided password against the stored hash and salt using argon2
-    return await argon2.verify(storedHash, password, {
-      salt: Buffer.from(storedSalt, "hex"), // Converting the stored salt from hexadecimal to Buffer
-      type: argon2.argon2d, // Using the argon2d hashing algorithm for verification
-    });
+    return await argon2.verify(storedHash, password);
   } catch (_err) {
-    // If there's an error (e.g., verification failure), return false
+    // A malformed hash or verification error is treated as "no match" rather
+    // than throwing, so a bad stored value can never accidentally grant access.
     return false;
   }
 };

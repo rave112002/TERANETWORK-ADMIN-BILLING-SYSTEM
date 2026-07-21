@@ -48,8 +48,7 @@ function purifyReqBody(obj, fieldModes = {}) {
 
   if (obj && typeof obj === "object") {
     for (const key in obj) {
-      const mode =
-        fieldModes[key] || (allowHtmlFields.has(key) ? "rich" : "plain");
+      const mode = fieldModes[key] || (allowHtmlFields.has(key) ? "rich" : "plain");
 
       if (typeof obj[key] === "string") {
         obj[key] = sanitizeValue(obj[key], mode);
@@ -162,33 +161,20 @@ export function securityHeaders(options = {}) {
             return callback(new Error("Not allowed by CORS policy"), false);
           }
         }
-<<<<<<< HEAD
-
         if (isDevelopment) {
-          // Allow localhost in development
+          // In development, allow Chrome extensions and localhost origins.
+          if (origin.startsWith("chrome-extension://")) {
+            return callback(null, true);
+          }
           if (origin.includes("localhost") || origin.includes("127.0.0.1")) {
             return callback(null, true);
           }
         }
-        if (allowedOrigins.includes(origin)) {
-          callback(null, true);
-        } else {
-          callback(new Error("Not allowed by CORS policy"));
-        }
-=======
-        if (isDevelopment && origin.startsWith("chrome-extension://")) {
-          // Allow Chrome extensions in development
-          return callback(null, true);
-        }
-
-        if (origin.includes("localhost") || origin.includes("127.0.0.1")) {
-          return callback(null, true);
-        }
+        // In all environments, honor the configured allow-list.
         if (allowedOrigins.includes(origin)) {
           return callback(null, true);
         }
         return callback(new Error("Not allowed by CORS policy"));
->>>>>>> 20dadd5 (reorder files and move to utils folder)
       },
       methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
       credentials: true,
@@ -198,10 +184,7 @@ export function securityHeaders(options = {}) {
         "X-Requested-With",
         "Accept",
         "Cache-Control",
-<<<<<<< HEAD
-=======
         "X-CSRF-Token",
->>>>>>> 20dadd5 (reorder files and move to utils folder)
       ],
       exposedHeaders: [
         "Content-Range",

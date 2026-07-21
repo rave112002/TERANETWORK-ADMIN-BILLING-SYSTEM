@@ -12,7 +12,9 @@
       "@utils/*": ["utils/*"],
       "@features/*": ["features/*"],
       "@lib/*": ["lib/*"],
-      "@images/*": ["assets/images/*"]
+      "@images/*": ["assets/images/*"],
+      "@store/*": ["store/*"],
+      "@services/*": ["services/*"]
     }
   }
 }

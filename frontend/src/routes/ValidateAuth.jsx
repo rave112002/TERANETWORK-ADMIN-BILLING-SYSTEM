@@ -1,35 +1,37 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
-export const Auth = ({ store, redirect, allowedRoles = [] }) => {
-  const token = store((state) => state.token);
-  const roles = store((state) => state.roles);
+import { useAuthStore } from "@store/useAuthStore";
+import { redirectTo } from "@utils/redirectTo";
+
+/**
+ * Guard for protected routes. Requires a token; optionally restricts by role.
+ * Remembers the attempted path so login can bounce the user back.
+ */
+export const Auth = ({ allowedRoles = [] }) => {
+  const token = useAuthStore((s) => s.token);
+  const role = useAuthStore((s) => s.user?.role);
+  const location = useLocation();
 
   if (!token) {
-    return <Navigate to={redirect} replace />;
+    redirectTo.set(location.pathname + location.search);
+    return <Navigate to="/login" replace />;
   }
 
-  // Check if user has one of the allowed roles
-  if (allowedRoles.length > 0 && !allowedRoles.includes(roles)) {
-    // Redirect to their appropriate dashboard based on their role
-    const roleRedirects = {
-      SUPERADMIN: "/superadmin/dashboard",
-      ADMIN: "/admin/dashboard",
-    };
-    return <Navigate to={roleRedirects[roles] || "/login"} replace />;
+  if (allowedRoles.length > 0 && !allowedRoles.includes(role)) {
+    // Authenticated but not permitted — send to the dashboard.
+    return <Navigate to="/dashboard" replace />;
   }
 
   return <Outlet />;
 };
 
-export const UnAuth = ({ store, redirect }) => {
-  const token = store((state) => state.token);
-  const roles = store((state) => state.roles);
-
+/**
+ * Guard for the login page. If already authenticated, skip to the dashboard.
+ */
+export const UnAuth = () => {
+  const token = useAuthStore((s) => s.token);
   if (token) {
-    const redirectPath =
-      typeof redirect === "function" ? redirect({ roles }) : redirect;
-    return <Navigate to={redirectPath} replace />;
+    return <Navigate to="/dashboard" replace />;
   }
-
   return <Outlet />;
 };

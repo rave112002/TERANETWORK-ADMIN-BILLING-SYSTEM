@@ -1,10 +1,6 @@
 import fs from "fs/promises";
 import multer from "multer";
-<<<<<<< HEAD
-import APIError from "../utils/APIError.js";
-=======
 import APIError from "../APIError.js";
->>>>>>> 20dadd5 (reorder files and move to utils folder)
 
 // Enhanced unlink functions
 export const unlinkSingle = async (file) => {

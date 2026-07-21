@@ -18,6 +18,8 @@ export default defineConfig({
       "@features": "/src/features",
       "@lib": "/src/lib",
       "@images": "/src/assets/images",
+      "@store": "/src/store",
+      "@services": "/src/services",
     },
   },
   server: {

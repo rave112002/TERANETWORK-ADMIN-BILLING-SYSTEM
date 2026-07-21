@@ -2,9 +2,9 @@ import { FileSearchOutlined, SearchOutlined } from "@ant-design/icons";
 import { Button, Input, Space, Typography } from "antd";
 import { useMemo, useRef, useState } from "react";
 import Highlighter from "react-highlight-words";
-import { heDecode } from "@utils/he-decode";
+import { heDecode } from "@utils/heDecode";
 import { decodeHtmlEntities } from "@utils/formatData";
-import { buildSorter, COLUMN_SORTER_TYPES } from "@utils/sortHelpers";
+import { buildSorter, COLUMN_SORTER_TYPES } from "@utils/sortHelper";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 const HIGHLIGHT_STYLE = { backgroundColor: "#ffc069", padding: 0 };

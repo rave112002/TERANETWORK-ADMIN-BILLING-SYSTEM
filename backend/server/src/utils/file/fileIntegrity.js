@@ -14,11 +14,7 @@
 import crypto from "crypto";
 import fs from "fs/promises";
 import path from "path";
-<<<<<<< HEAD
-import APIError from "../utils/APIError.js";
-=======
 import APIError from "../APIError.js";
->>>>>>> 20dadd5 (reorder files and move to utils folder)
 
 /**
  * File signatures (magic numbers) for common file types
@@ -27,9 +23,7 @@ import APIError from "../APIError.js";
 const FILE_SIGNATURES = {
   // Images
   "image/jpeg": [{ signature: [0xff, 0xd8, 0xff], offset: 0 }],
-  "image/png": [
-    { signature: [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a], offset: 0 },
-  ],
+  "image/png": [{ signature: [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a], offset: 0 }],
   "image/gif": [
     { signature: [0x47, 0x49, 0x46, 0x38, 0x37, 0x61], offset: 0 }, // GIF87a
     { signature: [0x47, 0x49, 0x46, 0x38, 0x39, 0x61], offset: 0 }, // GIF89a
@@ -171,10 +165,7 @@ export async function verifyFileSignature(filePath, expectedMimeType) {
  * @param {number} maxBytesToScan - Maximum bytes to scan (default: 1MB)
  * @returns {Promise<Array>} Array of detected suspicious patterns
  */
-export async function scanForSuspiciousPatterns(
-  filePath,
-  maxBytesToScan = 1024 * 1024
-) {
+export async function scanForSuspiciousPatterns(filePath, maxBytesToScan = 1024 * 1024) {
   try {
     const stats = await fs.stat(filePath);
     const bytesToRead = Math.min(stats.size, maxBytesToScan);
@@ -271,13 +262,9 @@ export async function scanFile(file, options = {}) {
     const stats = await fs.stat(file.path);
     if (stats.size > maxFileSize) {
       scanResult.passed = false;
-      scanResult.errors.push(
-        `File size exceeds maximum allowed (${maxFileSize} bytes)`
-      );
+      scanResult.errors.push(`File size exceeds maximum allowed (${maxFileSize} bytes)`);
       throw new APIError(
-        `File too large. Maximum size: ${(maxFileSize / (1024 * 1024)).toFixed(
-          2
-        )}MB`,
+        `File too large. Maximum size: ${(maxFileSize / (1024 * 1024)).toFixed(2)}MB`,
         400
       );
     }
@@ -288,29 +275,19 @@ export async function scanFile(file, options = {}) {
       scanResult.passed = false;
       scanResult.errors.push(`MIME type not allowed: ${file.mimetype}`);
       throw new APIError(
-        `File type not allowed. Allowed types: ${Object.keys(allowedTypes).join(
-          ", "
-        )}`,
+        `File type not allowed. Allowed types: ${Object.keys(allowedTypes).join(", ")}`,
         400
       );
     }
     scanResult.checks.mimeTypeAllowed = true;
 
     // Check 4: File extension matches MIME type
-    const extensionValid = validateFileExtension(
-      file.originalname,
-      file.mimetype,
-      allowedTypes
-    );
+    const extensionValid = validateFileExtension(file.originalname, file.mimetype, allowedTypes);
     if (!extensionValid) {
       scanResult.passed = false;
-      scanResult.errors.push(
-        `File extension does not match MIME type (${file.mimetype})`
-      );
+      scanResult.errors.push(`File extension does not match MIME type (${file.mimetype})`);
       throw new APIError(
-        `File extension mismatch. Expected: ${allowedTypes[file.mimetype].join(
-          ", "
-        )}`,
+        `File extension mismatch. Expected: ${allowedTypes[file.mimetype].join(", ")}`,
         400
       );
     }
@@ -318,17 +295,11 @@ export async function scanFile(file, options = {}) {
 
     // Check 5: File signature verification (magic numbers)
     if (strictMode) {
-      const signatureValid = await verifyFileSignature(
-        file.path,
-        file.mimetype
-      );
+      const signatureValid = await verifyFileSignature(file.path, file.mimetype);
       if (!signatureValid) {
         scanResult.passed = false;
         scanResult.errors.push("File signature does not match MIME type");
-        throw new APIError(
-          "File appears to be corrupted or has incorrect type",
-          400
-        );
+        throw new APIError("File appears to be corrupted or has incorrect type", 400);
       }
       scanResult.checks.signatureValid = true;
     } else {
@@ -339,10 +310,7 @@ export async function scanFile(file, options = {}) {
     if (scanSuspiciousPatterns) {
       // Only scan first 1KB for image files (reduces false positives)
       const scanSize = file.mimetype?.startsWith("image/") ? 1024 : 1024 * 1024;
-      const suspiciousPatterns = await scanForSuspiciousPatterns(
-        file.path,
-        scanSize
-      );
+      const suspiciousPatterns = await scanForSuspiciousPatterns(file.path, scanSize);
       console.log("suspiciousPatterns: ", suspiciousPatterns);
       scanResult.suspiciousPatterns = suspiciousPatterns;
 
@@ -363,10 +331,7 @@ export async function scanFile(file, options = {}) {
             return false;
           }
           // Ignore MZ header if found beyond the first 512 bytes (not in actual header)
-          if (
-            pattern.description.includes("MZ header") &&
-            pattern.offset > 512
-          ) {
+          if (pattern.description.includes("MZ header") && pattern.offset > 512) {
             return false;
           }
         }
@@ -380,10 +345,7 @@ export async function scanFile(file, options = {}) {
         const descriptions = realThreats.map((p) => p.description).join(", ");
         scanResult.errors.push(`Suspicious patterns detected: ${descriptions}`);
 
-        throw new APIError(
-          "File contains suspicious content and has been rejected",
-          400
-        );
+        throw new APIError("File contains suspicious content and has been rejected", 400);
       }
       scanResult.checks.noSuspiciousPatterns = true;
     } else {

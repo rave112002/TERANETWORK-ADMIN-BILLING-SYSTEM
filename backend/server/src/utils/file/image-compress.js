@@ -1,11 +1,7 @@
 import fs from "fs";
 import path from "path";
 import sharp from "sharp";
-<<<<<<< HEAD
-import catchAsync from "../utils/catchAsync.js";
-=======
 import catchAsync from "../catchAsync.js";
->>>>>>> 20dadd5 (reorder files and move to utils folder)
 // Configuration object for different compression scenarios
 const COMPRESSION_CONFIGS = {
   profile: {
@@ -62,8 +58,7 @@ export const compressImage = (config = "general") => {
     }
 
     try {
-      const compressionConfig =
-        COMPRESSION_CONFIGS[config] || COMPRESSION_CONFIGS.general;
+      const compressionConfig = COMPRESSION_CONFIGS[config] || COMPRESSION_CONFIGS.general;
       const tempPath = filePath.replace(ext, `-temp${ext}`);
 
       // Get original file stats
@@ -100,24 +95,16 @@ export const compressImage = (config = "general") => {
 
           if (isLandscape) {
             // Landscape: limit width, let height scale proportionally
-            sharpInstance = sharpInstance.resize(
-              compressionConfig.maxDimension,
-              null,
-              {
-                fit: "inside",
-                withoutEnlargement: true,
-              }
-            );
+            sharpInstance = sharpInstance.resize(compressionConfig.maxDimension, null, {
+              fit: "inside",
+              withoutEnlargement: true,
+            });
           } else {
             // Portrait: limit height, let width scale proportionally
-            sharpInstance = sharpInstance.resize(
-              null,
-              compressionConfig.maxDimension,
-              {
-                fit: "inside",
-                withoutEnlargement: true,
-              }
-            );
+            sharpInstance = sharpInstance.resize(null, compressionConfig.maxDimension, {
+              fit: "inside",
+              withoutEnlargement: true,
+            });
           }
         }
       }
@@ -159,10 +146,7 @@ export const compressImage = (config = "general") => {
         const compressedSize = compressedStats.size;
 
         // If size is acceptable or we've tried enough times, break
-        if (
-          compressedSize <= compressionConfig.targetSize ||
-          attempts >= maxAttempts
-        ) {
+        if (compressedSize <= compressionConfig.targetSize || attempts >= maxAttempts) {
           // Replace original with compressed
           fs.renameSync(tempPath, filePath);
 
@@ -193,23 +177,15 @@ export const compressImage = (config = "general") => {
           } else {
             const isLandscape = metadata.width > metadata.height;
             if (isLandscape) {
-              sharpInstance = sharpInstance.resize(
-                compressionConfig.maxDimension,
-                null,
-                {
-                  fit: "inside",
-                  withoutEnlargement: true,
-                }
-              );
+              sharpInstance = sharpInstance.resize(compressionConfig.maxDimension, null, {
+                fit: "inside",
+                withoutEnlargement: true,
+              });
             } else {
-              sharpInstance = sharpInstance.resize(
-                null,
-                compressionConfig.maxDimension,
-                {
-                  fit: "inside",
-                  withoutEnlargement: true,
-                }
-              );
+              sharpInstance = sharpInstance.resize(null, compressionConfig.maxDimension, {
+                fit: "inside",
+                withoutEnlargement: true,
+              });
             }
           }
         }
@@ -278,8 +254,7 @@ export const createImageCompressor = (options = {}) => {
       } else if (config.maxDimension) {
         // Single max dimension - maintain aspect ratio
         const needsResize =
-          metadata.width > config.maxDimension ||
-          metadata.height > config.maxDimension;
+          metadata.width > config.maxDimension || metadata.height > config.maxDimension;
 
         if (needsResize) {
           const isLandscape = metadata.width > metadata.height;

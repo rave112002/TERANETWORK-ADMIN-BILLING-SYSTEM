@@ -1,59 +1,93 @@
-import React from "react";
 import { Button, Form, Input } from "antd";
-import {
-  EyeInvisibleOutlined,
-  EyeOutlined,
-  LockOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
+import { LockOutlined, MailOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+
+import { useLoginMutation } from "@services/mutation/useAuthMutation";
+import { redirectTo } from "@utils/redirectTo";
+import { useEffect } from "react";
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  const [loginForm] = Form.useForm();
+
+  const loginMutation = useLoginMutation({
+    onSuccess: () => {
+      // Return the user to where they were headed, or the dashboard.
+      const dest = redirectTo.consume() || "/dashboard";
+      navigate(dest, { replace: true });
+    },
+  });
+
+  const onFinish = (values) => {
+    loginMutation.mutate(values);
+  };
+
+  useEffect(() => {
+    loginForm.setFieldValue({
+      email: "admin@teranetwork.local",
+      password: "Admin123!",
+    });
+  }, []);
+
   return (
-    <div className="h-dvh bg-[#308a4e] flex flex-col justify-center items-center">
-      <div className="bg-white px-12 py-10 rounded-2xl font-bold text-3xl shadow-xl flex-col gap-4 flex w-96">
-        <span className="w-full justify-center flex">Login</span>
-        <Form>
+    <div className="min-h-dvh bg-platinum flex items-center justify-center px-4">
+      <div className="w-full max-w-sm bg-white rounded-2xl shadow-sm border border-platinum p-8">
+        {/* Brand mark */}
+        <div className="mb-8 text-center">
+          <div className="mx-auto mb-4 h-11 w-11 rounded-xl bg-jet flex items-center justify-center">
+            <span className="text-white text-lg font-bold">T</span>
+          </div>
+          <h1 className="text-xl font-semibold text-jet">TeraNetwork</h1>
+          <p className="text-sm text-graphite mt-1">Admin &amp; Billing</p>
+        </div>
+
+        <Form
+          form={loginForm}
+          layout="vertical"
+          onFinish={onFinish}
+          requiredMark={false}
+          disabled={loginMutation.isPending}
+        >
           <Form.Item
-            name="username"
-            rules={[{ required: true, message: "Please input your username!" }]}
+            label="Email"
+            name="email"
+            rules={[
+              { required: true, message: "Email is required" },
+              { type: "email", message: "Enter a valid email" },
+            ]}
           >
             <Input
-              className="py-2!"
-              prefix={<UserOutlined />}
-              placeholder="Username"
-              // disabled={isLoading}
+              size="large"
+              prefix={<MailOutlined className="text-ash" />}
+              placeholder="you@teranetwork.local"
+              autoComplete="email"
             />
           </Form.Item>
+
           <Form.Item
+            label="Password"
             name="password"
-            rules={[
-              {
-                required: true,
-                message: "Please input your password!",
-              },
-            ]}
-            className="mb-8"
+            rules={[{ required: true, message: "Password is required" }]}
+            className="mb-6"
           >
             <Input.Password
-              className="py-2!"
-              prefix={<LockOutlined />}
-              // disabled={isLoading}
-              placeholder="Password"
-              // suffix={<EyeInvisibleOutlined />}
-              iconRender={(e) =>
-                e ? <EyeInvisibleOutlined /> : <EyeOutlined />
-              }
+              size="large"
+              prefix={<LockOutlined className="text-ash" />}
+              placeholder="••••••••"
+              autoComplete="current-password"
             />
           </Form.Item>
-          <div className="w-full bg-amber-200">
-            <Button
-              type="primary"
-              className="w-full font-bold"
-              href="/admin/dashboard"
-            >
-              Login
-            </Button>
-          </div>
+
+          <Button
+            type="primary"
+            htmlType="submit"
+            size="large"
+            block
+            loading={loginMutation.isPending}
+          >
+            Sign in
+          </Button>
         </Form>
       </div>
     </div>

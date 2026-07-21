@@ -3,62 +3,63 @@ import passport from "passport";
 import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt";
 import path from "path";
 
-// Function to configure Passport with JWT strategy
+/**
+ * Configure the Passport JWT strategy.
+ *
+ * When a request carries an `Authorization: Bearer <token>` header, this strategy:
+ *   1. Verifies the token signature with our RSA PUBLIC key (RS256 only).
+ *   2. Confirms the issuer/audience match what we sign with.
+ *   3. Loads the matching user row and attaches it as `req.user`.
+ *
+ * If any step fails, the request is rejected before it reaches a protected route.
+ *
+ * @param {import('../../config/database.js').default} db - shared Database instance
+ */
 const configurePassport = (db) => {
-  // Reading the public key from the file system for verifying JWT signature
-  const publicKey = fs.readFileSync(
-    path.resolve(`${process.env.jwtAuthPublicPath}`),
-    "utf-8"
-  );
+  // The PUBLIC key verifies signatures. It can never mint tokens, so it is safe
+  // to keep loaded in memory across all requests.
+  const publicKey = fs.readFileSync(path.resolve(`${process.env.jwtAuthPublicPath}`), "utf-8");
 
-  // Setting up options for the JWT strategy
-  const opts = {};
-  opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken(); // Extract JWT from the Bearer token in the Authorization header
-  opts.secretOrKey = publicKey; // Using the public key to verify the JWT
-  opts.issuer = process.env.ISSUER; // Setting the expected issuer of the JWT
-  opts.audience = process.env.AUDIENCE; // Setting the expected audience of the JWT
-  opts.algorithms = ['RS256']; // Only accept RS256 algorithm tokens
+  const opts = {
+    // Pull the token from the "Authorization: Bearer ..." header.
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secretOrKey: publicKey,
+    issuer: process.env.ISSUER,
+    audience: process.env.AUDIENCE,
+    // Only accept RS256. This rejects "alg: none" and HMAC-confusion attacks.
+    algorithms: ["RS256"],
+  };
 
-  // Using the JWT strategy with Passport
   passport.use(
     "jwt",
-    new JwtStrategy(opts, async (jwt_payload, done) => {
-      const { userId, exp } = jwt_payload; //destructuring data
-      const currentTime = Math.floor(Date.now() / 1000); // Current time in seconds
-
-      // Check if the token is expired manually (optional; passport-jwt does this too)
-      if (exp && exp < currentTime) {
-        return done(null, false, { message: "Token has expired" });
-      }
-
+    new JwtStrategy(opts, async (jwtPayload, done) => {
       try {
-        const [user] = await db.query(``, [userId] );
+        // We signed the token with { userId, role } (see auth.controller.js).
+        const { userId } = jwtPayload;
 
-        // If user is not found in the database, return an error
+        const [user] = await db.query(
+          "SELECT id, name, email, role, status FROM users WHERE id = ? LIMIT 1",
+          [userId]
+        );
+
+        // The user may have been deleted since the token was issued.
         if (!user) {
           return done(null, false, { message: "User not found" });
         }
 
-        // Check if the user's account is deactivated or deleted
-        if (user.isActive !== 0) {
-          return done(null, false, {
-            message:
-              user.isActive === 1
-                ? `Your account has been deactivated. Contact admin for reactivation of account.`
-                : `Your account has been deleted.`,
-          });
+        // A token is worthless if the account has since been disabled.
+        if (user.status !== "active") {
+          return done(null, false, { message: "Account is disabled" });
         }
 
-        // If user exists and is active, pass the user data to the next middleware
-          return done(null, user);
+        // Success: this object becomes `req.user` on the protected route.
+        return done(null, user);
       } catch (error) {
-        // passing error to the done callback
-        done(error, null);
+        // A real error (e.g. DB down) — pass it to Passport's error handling.
+        return done(error, false);
       }
     })
   );
 };
-
-// Exporting the function to be used in other parts of the app
 
 export default configurePassport;

@@ -1,8 +1,8 @@
 // hooks/api/axios.js
 import axios from "axios";
 
-import { redirectTo } from "@utils/redirect-to";
-import { useAuthStore } from "@services/store/use-auth-store";
+import { redirectTo } from "@utils/redirectTo";
+import { useAuthStore } from "@store/useAuthStore";
 
 export const httpMethod = {
   GET: "GET",

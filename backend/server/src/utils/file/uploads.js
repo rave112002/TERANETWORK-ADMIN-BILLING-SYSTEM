@@ -4,13 +4,8 @@ import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
-<<<<<<< HEAD
-import APIError from "../utils/APIError.js";
-import { catchAsync } from "../utils/catchAsync.js";
-=======
 import APIError from "../APIError.js";
 import { catchAsync } from "../catchAsync.js";
->>>>>>> 20dadd5 (reorder files and move to utils folder)
 const FILE_TYPE_CONFIGS = {
   images: {
     "image/jpeg": [".jpg", ".jpeg"],
@@ -24,13 +19,9 @@ const FILE_TYPE_CONFIGS = {
   documents: {
     "application/pdf": [".pdf"],
     "application/msword": [".doc"],
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [
-      ".docx",
-    ],
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document": [".docx"],
     "application/vnd.ms-excel": [".xls"],
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [
-      ".xlsx",
-    ],
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet": [".xlsx"],
     "text/plain": [".txt"],
     "text/csv": [".csv"],
   },
@@ -120,11 +111,7 @@ export const upload = (options) =>
       }
       // If custom allowedTypes object is provided (legacy support)
       else if (options.allowedTypes) {
-        const validation = validateFile(
-          options.allowedTypes,
-          mimeType,
-          fileExt
-        );
+        const validation = validateFile(options.allowedTypes, mimeType, fileExt);
 
         if (validation.valid) {
           cb(null, true);
@@ -162,10 +149,7 @@ export const compressImage = catchAsync(async (req, res, next) => {
   };
 
   // Check if file type is compressible
-  if (
-    !compressibleImages[mimeType] ||
-    !compressibleImages[mimeType].includes(ext)
-  ) {
+  if (!compressibleImages[mimeType] || !compressibleImages[mimeType].includes(ext)) {
     return next();
   }
 
@@ -190,9 +174,7 @@ export const compressImage = catchAsync(async (req, res, next) => {
 
       // Compress image based on format
       if (mimeType === "image/png") {
-        await sharp(filePath)
-          .png({ quality, compressionLevel: 9 })
-          .toFile(tempPath);
+        await sharp(filePath).png({ quality, compressionLevel: 9 }).toFile(tempPath);
       } else if (mimeType === "image/webp") {
         await sharp(filePath).webp({ quality }).toFile(tempPath);
       } else {
