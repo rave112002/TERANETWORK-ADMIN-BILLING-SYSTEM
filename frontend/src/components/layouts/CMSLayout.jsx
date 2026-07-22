@@ -5,6 +5,8 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 
 import { buildMenuItems } from "@utils/buildMenuItems";
 import { useAuthStore } from "@store/useAuthStore";
+import DryRunToggle from "@components/common/DryRunToggle";
+import DryRunBanner from "@components/common/DryRunBanner";
 
 const { Header, Sider, Content } = Layout;
 
@@ -82,6 +84,7 @@ const CMSLayout = ({ menu = [] }) => {
           </span>
 
           <div className="flex items-center gap-4">
+            <DryRunToggle />
             <span className="text-sm text-graphite">
               {user?.name} <span className="text-ash">({user?.email})</span>
             </span>
@@ -97,6 +100,7 @@ const CMSLayout = ({ menu = [] }) => {
         </Header>
 
         <Content className="bg-[#f5f5f5] overflow-auto">
+          <DryRunBanner />
           <Outlet />
         </Content>
       </Layout>

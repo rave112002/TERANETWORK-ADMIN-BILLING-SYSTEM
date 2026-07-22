@@ -1,0 +1,22 @@
+### ⚠ ASSUMED FORMAT — NOT A REAL CAPTURE ###
+#
+# The HSGQ_DOCUMENTATION.md lab reference lists the fields an ONU has (ONU ID,
+# MAC, Auth Status, Config Status, Online Status, Description) but does NOT
+# include a raw dump of `show onu-info all`. The layout below is our BEST GUESS
+# at the column format, used to develop + unit-test the parser.
+#
+# >>> BEFORE trusting this in production: run `show onu-info all` on the real
+#     XE04I bench (inside `interface epon 1`), paste the true output into a file
+#     named `show-onu-info-all.txt` in this folder, and adjust the parser +
+#     tests to match. Capture one transcript per command the driver issues.
+#
+# Lines starting with '#' here are just these notes; the parser ignores the
+# command echo, header, and separator rows.
+
+Tera-Network(config-epon-1)#show onu-info all
+ ONU   MAC-Address        Auth   Config  Status    Description
+ ----  -----------------  -----  ------  --------  ----------------------------------------
+ 27    30:c5:0f:d8:7f:2c  TRUE   TRUE    online    Jacqueline-Rebancos PON 2 NAP 1 PORT 5
+ 5     48:57:02:11:22:33  TRUE   TRUE    offline   Test-Customer PON 1 NAP 2 PORT 3
+ 12    a4:2b:b0:9c:11:e0  TRUE   FALSE   online    
+Tera-Network(config-epon-1)#

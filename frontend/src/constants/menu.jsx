@@ -13,6 +13,7 @@ import {
   Wallet,
   Repeat,
   Waypoints,
+  Radar,
 } from "lucide-react";
 
 const Dashboard = lazy(() => import("@pages/CMS/Dashboard"));
@@ -25,6 +26,7 @@ const PonPorts = lazy(() => import("@pages/CMS/PonPorts"));
 const Splitters = lazy(() => import("@pages/CMS/Splitters"));
 const Naps = lazy(() => import("@pages/CMS/Naps"));
 const Onus = lazy(() => import("@pages/CMS/Onus"));
+const Discovery = lazy(() => import("@pages/CMS/Discovery"));
 
 // Sidebar + route config. Items with `children` render as a collapsible group;
 // the parent has no `link`, only its children have routes. `value` doubles as
@@ -161,6 +163,18 @@ export const MODULES = [
         element: (
           <Suspense fallback={<ComponentLoader />}>
             <Onus />
+          </Suspense>
+        ),
+      },
+      {
+        type: "item",
+        icon: <Radar size={18} className="mr-1" />,
+        value: "discovery",
+        label: "Discovery",
+        link: "/discovery",
+        element: (
+          <Suspense fallback={<ComponentLoader />}>
+            <Discovery />
           </Suspense>
         ),
       },
